@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dentro de la mente de una IA · Cómo aprenden las máquinas</title>
+  <meta name="description" content="Una explicación visual e interactiva de cómo funciona la inteligencia artificial, pensada para cualquier persona sin conocimientos técnicos.">
+  <meta name="theme-color" content="#060a14">
+
+  <!-- Icono de la pestaña (SVG en línea, sin archivos extra) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
+
+  <!-- Tipografías: Orbitron (títulos futuristas) e Inter (texto legible) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Orden importante: datos → lógica general → demo del perceptrón -->
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/perceptron.js" defer></script>
+</head>
+<body>
+  <!-- Enlace para saltar directamente al contenido (accesibilidad con teclado) -->
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- Barra de progreso de lectura (decorativa) -->
+  <div class="barra-progreso" id="barra-progreso" aria-hidden="true"></div>
+
+  <!-- ===================== CABECERA ===================== -->
+  <header class="cabecera" id="cabecera">
+    <div class="contenedor cabecera__contenido">
+      <a href="#inicio" class="logo" aria-label="Mente IA, volver al inicio">
+        <span class="logo__icono" aria-hidden="true">◉</span>
+        Mente<span class="texto-neon">IA</span>
+      </a>
+
+      <button class="btn-tema" id="btn-tema" type="button" aria-label="Cambiar a modo claro">
+        <span class="btn-tema__icono" aria-hidden="true">☀️</span>
+      </button>
+
+      <nav class="nav" id="nav" aria-label="Navegación principal">
+        <button class="nav__toggle" id="btn-menu" type="button" aria-expanded="false" aria-controls="nav-lista">
+          <span class="sr-only">Abrir menú</span>
+          <span class="nav__hamburguesa" aria-hidden="true"></span>
+        </button>
+        <ul class="nav__lista" id="nav-lista">
+          <li><a href="#que-es">¿Qué es?</a></li>
+          <li><a href="#red-neuronal">Red neuronal</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#dia-a-dia">Día a día</a></li>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#etica">Ética</a></li>
+          <li><a href="#suscripcion">Suscríbete</a></li>
+          <li><a href="#fuentes">Fuentes</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- ===================== 1. INICIO (HERO) ===================== -->
+    <section id="inicio" class="hero" aria-labelledby="titulo-principal">
+      <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+      <div class="hero__velo" aria-hidden="true"></div>
+
+      <div class="hero__contenido contenedor">
+        <p class="hero__etiqueta">// Inteligencia artificial explicada para humanos</p>
+        <!-- El lector de pantalla lee el aria-label completo; el efecto de escritura es solo visual -->
+        <h1 class="hero__titulo" id="titulo-principal" aria-label="Dentro de la mente de una IA">
+          <span id="texto-escrito" aria-hidden="true"></span><span class="cursor-escritura" aria-hidden="true"></span>
+        </h1>
+        <p class="hero__subtitulo">
+          Cómo aprenden las máquinas: un viaje visual e interactivo, sin fórmulas complicadas.
+        </p>
+        <a href="#que-es" class="btn btn--primario btn--grande">
+          Explorar <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== 2. ¿QUÉ ES LA IA? ===================== -->
+    <section id="que-es" class="seccion" aria-labelledby="titulo-que-es">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <span class="seccion__numero">01</span>
+          <h2 id="titulo-que-es">¿Qué es la IA?</h2>
+          <p>
+            Seguro has oído “IA”, “Machine Learning” y “Deep Learning” como si fueran lo mismo.
+            En realidad son como muñecas rusas: cada una vive dentro de la anterior.
+            Toca cada círculo para descubrir la diferencia.
+          </p>
+        </header>
+
+        <div class="circulos reveal">
+          <svg class="circulos__svg" viewBox="0 0 400 400" role="img" aria-labelledby="svg-titulo svg-desc">
+            <title id="svg-titulo">Diagrama de círculos concéntricos</title>
+            <desc id="svg-desc">El círculo más grande es la Inteligencia Artificial. Dentro está el Machine Learning, y dentro de este, el Deep Learning.</desc>
+            <g class="capa capa--ia" data-capa="ia">
+              <circle cx="200" cy="200" r="185" />
+              <text x="200" y="58" text-anchor="middle">IA</text>
+            </g>
+            <g class="capa capa--ml" data-capa="ml">
+              <circle cx="200" cy="250" r="128" />
+              <text x="200" y="160" text-anchor="middle">Machine Learning</text>
+            </g>
+            <g class="capa capa--dl" data-capa="dl">
+              <circle cx="200" cy="305" r="68" />
+              <text x="200" y="300" text-anchor="middle">Deep</text>
+              <text x="200" y="322" text-anchor="middle">Learning</text>
+            </g>
+          </svg>
+
+          <div class="circulos__panel">
+            <div class="circulos__botones" role="group" aria-label="Elige un concepto">
+              <button type="button" class="btn btn--chip" data-capa-boton="ia" aria-pressed="true">Inteligencia Artificial</button>
+              <button type="button" class="btn btn--chip" data-capa-boton="ml" aria-pressed="false">Machine Learning</button>
+              <button type="button" class="btn btn--chip" data-capa-boton="dl" aria-pressed="false">Deep Learning</button>
+            </div>
+
+            <div class="circulos__info" aria-live="polite">
+              <article class="info-capa" data-capa-info="ia">
+                <h3><span aria-hidden="true">🤖</span> Inteligencia Artificial</h3>
+                <p>
+                  Es el gran objetivo: lograr que una máquina haga tareas que normalmente requieren inteligencia humana,
+                  como entender el lenguaje, reconocer imágenes o tomar decisiones.
+                </p>
+                <p class="info-capa__ejemplo"><strong>Ejemplo:</strong> un programa de ajedrez de los años 80 que sigue reglas escritas a mano por expertos.</p>
+              </article>
+              <article class="info-capa" data-capa-info="ml">
+                <h3><span aria-hidden="true">📊</span> Machine Learning (aprendizaje automático)</h3>
+                <p>
+                  En lugar de escribirle reglas a la máquina, le damos <strong>muchos ejemplos</strong> y ella misma
+                  descubre los patrones. Es como aprender a reconocer perros viendo miles de fotos, no leyendo una definición.
+                </p>
+                <p class="info-capa__ejemplo"><strong>Ejemplo:</strong> el filtro de spam que aprende de los correos que marcas como basura.</p>
+              </article>
+              <article class="info-capa" data-capa-info="dl">
+                <h3><span aria-hidden="true">🧠</span> Deep Learning (aprendizaje profundo)</h3>
+                <p>
+                  Un tipo de Machine Learning que usa <strong>redes neuronales con muchas capas</strong>, inspiradas
+                  vagamente en el cerebro. Cada capa detecta cosas más complejas: bordes → formas → ojos → una cara.
+                </p>
+                <p class="info-capa__ejemplo"><strong>Ejemplo:</strong> los asistentes que entienden tu voz o los chatbots que escriben textos.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. CÓMO APRENDE UNA RED NEURONAL ===================== -->
+    <section id="red-neuronal" class="seccion seccion--alt" aria-labelledby="titulo-red">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <span class="seccion__numero">02</span>
+          <h2 id="titulo-red">Cómo aprende una red neuronal</h2>
+          <p>
+            Imagina una red de pequeñas “bombillas” conectadas. La información entra por la izquierda,
+            viaja por las conexiones y produce una respuesta a la derecha. Cuando se equivoca, la red
+            ajusta sus conexiones hacia atrás. Repite esto millones de veces… y aprende.
+          </p>
+        </header>
+
+        <div class="red reveal">
+          <figure class="red__figura">
+            <div class="lienzo">
+              <canvas id="red-canvas" class="red__canvas" role="img"
+                aria-label="Animación de una red neuronal con una capa de entrada de 3 neuronas, dos capas ocultas de 5 neuronas y una capa de salida de 2 neuronas que representan gato y perro. Señales cian viajan hacia adelante y señales magenta viajan hacia atrás para ajustar los pesos."></canvas>
+            </div>
+            <figcaption class="red__controles">
+              <p class="red__fase" id="fase-red">Fase actual: propagación hacia adelante</p>
+              <button type="button" class="btn btn--secundario btn--pequeno" id="btn-red-pausa" aria-pressed="false">⏸ Pausar</button>
+            </figcaption>
+            <ul class="red__leyenda" aria-label="Leyenda">
+              <li><span class="leyenda-color leyenda-color--cian" aria-hidden="true"></span> Señal hacia adelante (predicción)</li>
+              <li><span class="leyenda-color leyenda-color--magenta" aria-hidden="true"></span> Señal hacia atrás (corrección)</li>
+              <li><span class="leyenda-linea" aria-hidden="true"></span> Grosor de línea = importancia (peso)</li>
+            </ul>
+          </figure>
+
+          <ol class="pasos">
+            <li>
+              <h3>Entrada</h3>
+              <p>Todo se convierte en números: una foto son miles de píxeles, cada uno con su valor de color.</p>
+            </li>
+            <li>
+              <h3>Pesos</h3>
+              <p>Cada conexión tiene un “peso”: qué tanta importancia le da a la señal que recibe.</p>
+            </li>
+            <li>
+              <h3>Activación</h3>
+              <p>Cada neurona suma lo que le llega y, si supera un umbral, se “enciende” y pasa la señal.</p>
+            </li>
+            <li>
+              <h3>Salida</h3>
+              <p>La última capa da una respuesta: “Creo que es un gato, con 92% de seguridad”.</p>
+            </li>
+            <li>
+              <h3>Error y ajuste</h3>
+              <p>Si se equivocó, calcula cuánto y corrige los pesos de atrás hacia adelante. A esto se le llama <em>retropropagación</em>.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. DEMO INTERACTIVA ===================== -->
+    <section id="demo" class="seccion" aria-labelledby="titulo-demo">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <span class="seccion__numero">03</span>
+          <h2 id="titulo-demo">Demo: entrena tu propia IA</h2>
+          <p>
+            Esta es una neurona artificial real: un <strong>perceptrón</strong>, inventado en 1958.
+            Haz clic para colocar puntos de dos colores y mira cómo la línea aprende a separarlos en tiempo real.
+            Al principio adivina al azar; con cada error, se corrige un poquito.
+          </p>
+        </header>
+
+        <div class="demo reveal">
+          <div class="demo__lienzo-envoltura">
+            <canvas id="demo-canvas" class="demo__lienzo" tabindex="0" role="application"
+              aria-label="Área de entrenamiento del perceptrón"
+              aria-describedby="demo-instrucciones-teclado"></canvas>
+            <p id="demo-instrucciones-teclado" class="demo__ayuda">
+              <span aria-hidden="true">⌨️</span> Con teclado: enfoca el área, usa las <kbd>flechas</kbd> para mover el cursor,
+              <kbd>Enter</kbd> para colocar un punto y <kbd>1</kbd> / <kbd>2</kbd> para cambiar de color.
+            </p>
+          </div>
+
+          <div class="demo__panel">
+            <fieldset class="demo__grupo">
+              <legend>1. Elige el color del punto</legend>
+              <div class="demo__botones">
+                <button type="button" class="btn btn--chip" id="btn-clase-a" aria-pressed="true">
+                  <span class="punto punto--a" aria-hidden="true"></span> Grupo cian
+                </button>
+                <button type="button" class="btn btn--chip" id="btn-clase-b" aria-pressed="false">
+                  <span class="punto punto--b" aria-hidden="true"></span> Grupo magenta
+                </button>
+              </div>
+              <p class="demo__ayuda">Consejo: <kbd>Shift</kbd> + clic coloca el color contrario.</p>
+            </fieldset>
+
+            <fieldset class="demo__grupo">
+              <legend>2. Controla el aprendizaje</legend>
+              <div class="demo__botones">
+                <button type="button" class="btn btn--secundario btn--pequeno" id="btn-entrenar" aria-pressed="false">⏸ Pausar</button>
+                <button type="button" class="btn btn--secundario btn--pequeno" id="btn-ejemplo">✨ Generar ejemplo</button>
+                <button type="button" class="btn btn--secundario btn--pequeno" id="btn-reiniciar">↺ Reiniciar pesos</button>
+                <button type="button" class="btn btn--secundario btn--pequeno" id="btn-limpiar">🗑 Borrar puntos</button>
+              </div>
+              <label class="demo__rango" for="rango-tasa">
+                Velocidad de aprendizaje: <output id="valor-tasa" for="rango-tasa">0.10</output>
+              </label>
+              <input type="range" id="rango-tasa" min="0.01" max="0.5" step="0.01" value="0.1">
+            </fieldset>
+
+            <dl class="demo__stats">
+              <div><dt>Época</dt><dd id="demo-epoca">0</dd></div>
+              <div><dt>Puntos</dt><dd id="demo-puntos">0</dd></div>
+              <div><dt>Errores</dt><dd id="demo-errores">0</dd></div>
+              <div><dt>Precisión</dt><dd id="demo-precision">—</dd></div>
+            </dl>
+
+            <p class="demo__ecuacion">Línea aprendida: <code id="demo-ecuacion">—</code></p>
+            <p class="demo__estado" id="demo-estado" role="status" aria-live="polite">Coloca puntos de los dos colores para empezar.</p>
+            <p class="demo__privacidad"><span aria-hidden="true">🔒</span> Todo ocurre en tu navegador: los puntos no se guardan ni se envían a ningún sitio.</p>
+          </div>
+        </div>
+
+        <details class="explicacion reveal">
+          <summary>¿Qué está pasando por dentro?</summary>
+          <p>
+            El perceptrón tiene solo tres números: dos <strong>pesos</strong> (w₁ y w₂) y un <strong>sesgo</strong> (b).
+            Para cada punto calcula <code>w₁·x + w₂·y + b</code>: si el resultado es positivo dice “cian”; si es negativo, “magenta”.
+          </p>
+          <p>
+            Cuando se equivoca, mueve los pesos un poquito en la dirección correcta. Cada vuelta completa por todos los puntos
+            se llama <strong>época</strong>. Si los puntos se pueden separar con una línea recta, está garantizado que tarde o temprano lo logrará.
+            Si no se puede (por ejemplo, un grupo rodeando al otro), necesitaría más neuronas: ¡por eso existen las redes profundas!
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================== 5. LA IA EN TU DÍA A DÍA ===================== -->
+    <section id="dia-a-dia" class="seccion seccion--alt" aria-labelledby="titulo-dia">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <span class="seccion__numero">04</span>
+          <h2 id="titulo-dia">La IA en tu día a día</h2>
+          <p>Probablemente hoy ya usaste inteligencia artificial varias veces sin notarlo. Toca cada tarjeta para ver cómo funciona.</p>
+        </header>
+
+        <!-- Las tarjetas se generan desde js/data.js -->
+        <ul class="tarjetas" id="tarjetas"></ul>
+        <noscript><p class="aviso-noscript">Activa JavaScript para ver las tarjetas interactivas.</p></noscript>
+      </div>
+    </section>
+
+    <!-- ===================== 6. LÍNEA DE TIEMPO ===================== -->
+    <section id="historia" class="seccion" aria-labelledby="titulo-historia">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <span class="seccion__numero">05</span>
+          <h2 id="titulo-historia">Una breve historia de la IA</h2>
+          <p>De una pregunta filosófica en 1950 a los asistentes que conversan contigo hoy.</p>
+        </header>
+
+        <!-- Los hitos se generan desde js/data.js -->
+        <ol class="linea-tiempo" id="linea-tiempo"></ol>
+        <noscript><p class="aviso-noscript">Activa JavaScript para ver la línea de tiempo.</p></noscript>
+      </div>
+    </section>
+
+    <!-- ===================== 7. ÉTICA Y RETOS ===================== -->
+    <section id="etica" class="seccion seccion--alt" aria-labelledby="titulo-etica">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <span class="seccion__numero">06</span>
+          <h2 id="titulo-etica">Ética y retos</h2>
+          <p>La IA es una herramienta poderosa, y como toda herramienta poderosa trae preguntas importantes.</p>
+        </header>
+
+        <div class="etica">
+          <article class="etica__tarjeta reveal">
+            <span class="etica__icono" aria-hidden="true">⚖️</span>
+            <h3>Sesgos</h3>
+            <p>
+              Una IA aprende de datos creados por personas, y puede heredar sus prejuicios. Si un sistema de contratación
+              se entrena con historiales donde casi siempre se contrató a hombres, puede aprender a descartar a mujeres.
+            </p>
+            <p class="etica__solucion"><strong>¿Qué podemos hacer?</strong> Usar datos diversos, auditar los resultados y que las decisiones importantes las revise una persona.</p>
+          </article>
+
+          <article class="etica__tarjeta reveal">
+            <span class="etica__icono" aria-hidden="true">🔒</span>
+            <h3>Privacidad</h3>
+            <p>
+              Los modelos necesitan enormes cantidades de datos, y a veces se usan datos personales sin un consentimiento claro.
+              El reconocimiento facial, por ejemplo, puede usarse para vigilar a la población.
+            </p>
+            <p class="etica__solucion"><strong>¿Qué podemos hacer?</strong> Recoger solo lo necesario, anonimizar y exigir leyes de protección de datos. Esta página lo practica: solo te pide tu correo, y solo si quieres.</p>
+          </article>
+
+          <article class="etica__tarjeta reveal">
+            <span class="etica__icono" aria-hidden="true">💼</span>
+            <h3>Empleo</h3>
+            <p>
+              La IA automatiza tareas repetitivas y transforma muchas profesiones. Algunos empleos cambiarán o desaparecerán,
+              y surgirán otros nuevos que hoy ni imaginamos.
+            </p>
+            <p class="etica__solucion"><strong>¿Qué podemos hacer?</strong> Apostar por la formación continua, políticas de transición justas y usar la IA como asistente, no como reemplazo.</p>
+          </article>
+
+          <article class="etica__tarjeta reveal">
+            <span class="etica__icono" aria-hidden="true">📰</span>
+            <h3>Desinformación</h3>
+            <p>
+              Hoy se pueden crear fotos, videos y voces falsas (<em>deepfakes</em>) muy realistas. Además, los chatbots a veces
+              “alucinan”: inventan datos con total seguridad.
+            </p>
+            <p class="etica__solucion"><strong>¿Qué podemos hacer?</strong> Verificar fuentes, desconfiar de lo que parece demasiado impactante y fomentar la alfabetización digital.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. SUSCRIPCIÓN ===================== -->
+    <section id="suscripcion" class="seccion" aria-labelledby="titulo-suscripcion">
+      <div class="contenedor">
+        <div class="suscripcion reveal">
+          <span class="seccion__numero">07</span>
+          <h2 id="titulo-suscripcion">¿Quieres seguir aprendiendo?</h2>
+          <p>Recibe de vez en cuando novedades sobre inteligencia artificial, explicadas de forma sencilla.</p>
+
+          <!--
+            Formulario de Formspree.
+            ⚠️ Reemplaza TU_ID por el ID de tu formulario (ver README.md).
+            El único dato que se pide es el correo electrónico.
+          -->
+          <form id="form-suscripcion" class="suscripcion__form" action="https://formspree.io/f/TU_ID" method="POST" novalidate>
+            <label for="email" class="suscripcion__etiqueta">Correo electrónico</label>
+            <div class="suscripcion__fila">
+              <input type="email" id="email" name="email" class="suscripcion__input"
+                placeholder="tucorreo@ejemplo.com" autocomplete="email" inputmode="email"
+                required maxlength="254" aria-describedby="email-error email-nota">
+              <button type="submit" class="btn btn--primario" id="btn-suscribir">Suscribirme</button>
+            </div>
+            <p id="email-error" class="suscripcion__error" aria-live="assertive"></p>
+            <p id="email-nota" class="suscripcion__nota">Solo usaremos tu correo para enviarte novedades. Nada más.</p>
+
+            <!-- Campo trampa anti-spam de Formspree: invisible para personas, no es un dato personal -->
+            <div class="honeypot" aria-hidden="true">
+              <label for="gotcha">No llenes este campo</label>
+              <input type="text" id="gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+          </form>
+
+          <div id="suscripcion-gracias" class="suscripcion__gracias" role="status" tabindex="-1" hidden>
+            <span class="suscripcion__gracias-icono" aria-hidden="true">✓</span>
+            <p><strong>¡Gracias por suscribirte!</strong></p>
+            <p>Pronto recibirás novedades sobre IA en tu bandeja de entrada.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. FUENTES Y CRÉDITOS ===================== -->
+    <section id="fuentes" class="seccion seccion--alt" aria-labelledby="titulo-fuentes">
+      <div class="contenedor">
+        <header class="seccion__cabecera reveal">
+          <span class="seccion__numero">08</span>
+          <h2 id="titulo-fuentes">Fuentes y créditos</h2>
+          <p>Referencias usadas para preparar este contenido. ¡Te invitamos a explorarlas!</p>
+        </header>
+
+        <ol class="fuentes reveal">
+          <li>Turing, A. M. (1950). <cite>Computing Machinery and Intelligence</cite>. Mind, 59(236), 433–460. <a href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank" rel="noopener noreferrer">doi.org/10.1093/mind/LIX.236.433</a></li>
+          <li>McCarthy, J., Minsky, M., Rochester, N. y Shannon, C. (1955). <cite>A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence</cite>.</li>
+          <li>Rosenblatt, F. (1958). <cite>The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain</cite>. Psychological Review, 65(6). <a href="https://doi.org/10.1037/h0042519" target="_blank" rel="noopener noreferrer">doi.org/10.1037/h0042519</a></li>
+          <li>Rumelhart, D., Hinton, G. y Williams, R. (1986). <cite>Learning representations by back-propagating errors</cite>. Nature, 323. <a href="https://doi.org/10.1038/323533a0" target="_blank" rel="noopener noreferrer">doi.org/10.1038/323533a0</a></li>
+          <li>Krizhevsky, A., Sutskever, I. y Hinton, G. (2012). <cite>ImageNet Classification with Deep Convolutional Neural Networks</cite>. NeurIPS.</li>
+          <li>Silver, D. et al. (2016). <cite>Mastering the game of Go with deep neural networks and tree search</cite>. Nature, 529. <a href="https://doi.org/10.1038/nature16961" target="_blank" rel="noopener noreferrer">doi.org/10.1038/nature16961</a></li>
+          <li>Vaswani, A. et al. (2017). <cite>Attention Is All You Need</cite>. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">arxiv.org/abs/1706.03762</a></li>
+          <li>Russell, S. y Norvig, P. <cite>Artificial Intelligence: A Modern Approach</cite>. Pearson. <a href="https://aima.cs.berkeley.edu/" target="_blank" rel="noopener noreferrer">aima.cs.berkeley.edu</a></li>
+          <li>Goodfellow, I., Bengio, Y. y Courville, A. (2016). <cite>Deep Learning</cite>. MIT Press. <a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener noreferrer">deeplearningbook.org</a></li>
+          <li>UNESCO (2021). <cite>Recomendación sobre la ética de la inteligencia artificial</cite>. <a href="https://www.unesco.org/es/artificial-intelligence/recommendation-ethics" target="_blank" rel="noopener noreferrer">unesco.org</a></li>
+          <li>Google. <cite>Machine Learning Crash Course</cite>. <a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noopener noreferrer">developers.google.com/machine-learning/crash-course</a></li>
+          <li>3Blue1Brown. <cite>Serie sobre redes neuronales</cite> (video). <a href="https://www.3blue1brown.com/topics/neural-networks" target="_blank" rel="noopener noreferrer">3blue1brown.com</a></li>
+        </ol>
+
+        <p class="creditos reveal">
+          Tipografías <a href="https://fonts.google.com/specimen/Orbitron" target="_blank" rel="noopener noreferrer">Orbitron</a> e
+          <a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener noreferrer">Inter</a> (Google Fonts).
+          Animaciones y demo programadas a mano con <code>&lt;canvas&gt;</code> y JavaScript puro.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== 10. FOOTER ===================== -->
+  <footer class="pie">
+    <div class="contenedor pie__contenido">
+      <p>
+        Creado por <strong>FabianJCV24</strong> ·
+        <a href="https://github.com/FabianJCV24/mente-ia" target="_blank" rel="noopener noreferrer">Ver repositorio en GitHub</a>
+      </p>
+      <p>© <span id="anio-actual">2026</span> · Sin cookies, sin rastreo, sin registro.</p>
+      <a href="#inicio" class="pie__arriba">Volver arriba <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+</body>
+</html>
